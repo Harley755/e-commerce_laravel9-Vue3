@@ -25290,7 +25290,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         getProducts = _useProduct.getProducts,
         increaseQuantity = _useProduct.increaseQuantity,
         decreaseQuantity = _useProduct.decreaseQuantity,
-        destroyProduct = _useProduct.destroyProduct;
+        destroyProduct = _useProduct.destroyProduct,
+        cartCount = _useProduct.cartCount;
+
+    var emitter = __webpack_require__(/*! tiny-emitter/instance */ "./node_modules/tiny-emitter/instance.js");
 
     var cartTotal = (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       var price = Object.values(products.value).reduce(function (acc, product) {
@@ -25313,6 +25316,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return getProducts();
 
               case 4:
+                emitter.emit('cartCountUpdated', cartCount.value);
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -25339,6 +25345,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return getProducts();
 
               case 4:
+                emitter.emit('cartCountUpdated', cartCount.value);
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -25365,6 +25374,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return getProducts();
 
               case 4:
+                emitter.emit('cartCountUpdated', cartCount.value);
+
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -25401,6 +25413,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       increaseQuantity: increaseQuantity,
       decreaseQuantity: decreaseQuantity,
       destroyProduct: destroyProduct,
+      cartCount: cartCount,
+      emitter: emitter,
       cartTotal: cartTotal,
       increase: increase,
       decrease: decrease,
@@ -25788,6 +25802,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function useProduct() {
   var products = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
+  var cartCount = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(0);
 
   var getProducts = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -25802,8 +25817,9 @@ function useProduct() {
             case 2:
               response = _context.sent;
               products.value = response.data.cartContent;
+              cartCount.value = response.data.cartCount;
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -25945,7 +25961,8 @@ function useProduct() {
     getProducts: getProducts,
     increaseQuantity: increaseQuantity,
     decreaseQuantity: decreaseQuantity,
-    destroyProduct: destroyProduct
+    destroyProduct: destroyProduct,
+    cartCount: cartCount
   };
 }
 

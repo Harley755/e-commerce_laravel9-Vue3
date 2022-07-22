@@ -102,10 +102,13 @@
         increaseQuantity,
         decreaseQuantity,
         destroyProduct,
+        cartCount,
     } = useProduct()
 
+    const emitter = require('tiny-emitter/instance');
+
     const cartTotal = computed(() => {
-        let price = Object.values(products.value)
+        let price = Object.values(products.value) 
         .reduce((acc, product) => acc += product.price * product.quantity, 0);
 
         return formatPrice(price);
@@ -114,16 +117,19 @@
     const increase = async(id) => {
         await increaseQuantity(id);
         await getProducts();
+        emitter.emit('cartCountUpdated', cartCount.value)
     }
 
     const decrease = async(id) => {
         await decreaseQuantity(id);
         await getProducts();
+        emitter.emit('cartCountUpdated', cartCount.value)
     }
 
     const destroy = async(id) => {
         await destroyProduct(id);
         await getProducts();
+        emitter.emit('cartCountUpdated', cartCount.value)
     }
 
 

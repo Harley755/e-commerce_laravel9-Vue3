@@ -27,6 +27,16 @@ export default function useProduct() {
         console.log(response);
     }
 
+    const increaseQuantity = async(id) => {
+        await axios.get('/api/products/increase/' + id);
+    }
+    const decreaseQuantity = async(id) => {
+        await axios.get('/api/products/decrease/' + id);
+    }
+    const destroyProduct = async(id) => {
+        await axios.delete('/api/products/' + id);
+    }
+
 
 
     return {
@@ -34,5 +44,8 @@ export default function useProduct() {
         getCount,
         products,
         getProducts,
+        increaseQuantity,
+        decreaseQuantity,
+        destroyProduct,
     }
 }
